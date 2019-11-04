@@ -8,6 +8,7 @@ class Ticket(models.Model):
 class Person(models.Model):
     name = models.CharField('First & Last Name: ', max_length=200)
     phone_number = models.CharField('Phone Number: ', max_length=30)
+    person = models.ManyToManyField(Ticket)
 
 class Event(models.Model):
     name = models.CharField('Event Name', max_length=120)
@@ -15,15 +16,29 @@ class Event(models.Model):
     venue = models.CharField(max_length=120)
     manager = models.CharField(max_length = 60)
     description = models.TextField(blank=True)
-    tickets = models.ManyToManyField(Ticket)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, default=0)
     guest_list = models.ManyToManyField(Person)
     
     def __str__(self):
         return self.name
-   
-    # by date to find an upcoming event_date
-    # by location/ venune to see proximixy 
-    # by desciption to see if the event is intresting 
-    # guest_list --> to see what events a specifc user is attending
+
+
+'''
+Model Associations
+
+Person:
+-one person can have many tickets
+-one person can go to many events
+
+
+Ticket:
+-one ticket can have access to many event
+-one ticket can also just have accesss to one event
+
+Event:
+- one person can go to many events
+
+
+'''
 
 
